@@ -1,6 +1,6 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace ExperianWeather.API.Model
+namespace Experian.API.Model
 {
     public class WeatherModel
     {

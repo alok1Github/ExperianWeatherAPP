@@ -1,16 +1,12 @@
-﻿using ExperianWeather.API.Model;
+﻿using Experian.API.Model;
 using Microsoft.AspNetCore.Mvc;
 
-namespace ExperianWeather.API.Features.Weather
+namespace Experian.API.Features.Weather
 {
     [Route("api/[controller]")]
     [ApiController]
     public class WeatherController : ControllerBase
-    {
-        /// <summary>
-        /// Get WeatherForecast 
-        /// </summary>
-        /// <returns></returns>
+    {      
         [HttpGet]
         public async Task<IActionResult> GetWeatherForecast()
         {

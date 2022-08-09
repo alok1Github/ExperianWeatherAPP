@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 
-namespace ExperianWeather.API.Controllers
+namespace Experian.API.Controllers
 {
     [ApiController]
     [Route("[controller]")]

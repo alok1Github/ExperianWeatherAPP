@@ -1,4 +1,4 @@
-﻿namespace ExperianWeather.API
+﻿namespace Experian.API
 {
     public class IGetWeather
     {
