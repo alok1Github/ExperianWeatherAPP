@@ -1,6 +1,10 @@
-﻿namespace Experian.API
+﻿using Experian.API.Model;
+using Experian.API.Request;
+
+namespace Experian.API
 {
-    public class IGetWeather
+    public interface IGetWeather
     {
+        Task<WeatherModel> Handler(WeatherRequest request);
     }
 }

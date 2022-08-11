@@ -1,37 +1,31 @@
 ﻿using Experian.API.Model;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Practices.EnterpriseLibrary.Common.Utility;
+using Experian.API.Request;
 
 namespace Experian.API.Features.Weather
 {
     [Route("api/[controller]")]
     [ApiController]
     public class WeatherController : ControllerBase
-    {      
-        [HttpGet]
-        public async Task<IActionResult> GetWeatherForecast()
+    {
+        private readonly IGetWeather getWeather;
+
+        public WeatherController(IGetWeather getWeather)
         {
+            Guard.ArgumentNotNull(getWeather, nameof(getWeather));
 
-            var result = await
-                 GetProductAsync("http://api.weatherapi.com/v1/current.json?key=e0796082219144bca7590818220908&q=Edinburgh&aqi=yes");
-
-
-
-            return Ok(result);
+            this.getWeather = getWeather;
         }
 
-        static async Task<WeatherModel> GetProductAsync(string path)
+        [HttpGet]
+        public async Task<IActionResult> GetWeatherForecast([FromQuery] WeatherRequest request )
         {
-            var weather = new WeatherModel();
-            using (var client = new HttpClient())
-            {
-                HttpResponseMessage response = await client.GetAsync(path);
-                if (response.IsSuccessStatusCode)
-                {
-                    weather = await response.Content.ReadFromJsonAsync<WeatherModel>();         
-                }
-            }
+            if (request == null) BadRequest();          
 
-            return weather;
+            var result = await this.getWeather.Handler(request);
+
+            return result != null ? Ok(result) : NotFound();            
         }
     }
 }
