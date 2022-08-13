@@ -1,29 +1,37 @@
-﻿using Experian.API.Model;
+﻿using Experian.API.Interface;
+using Experian.API.Interface.Weather;
+using Experian.API.Model;
 using Experian.API.Request;
+using Microsoft.Practices.EnterpriseLibrary.Common.Utility;
+
 
 namespace Experian.API.Features.Weather
 {
     public class GetWeather : IGetWeather
     {
-        public async Task<WeatherModel?> Handler(WeatherRequest request)  
+        private readonly IAppSettings<WeatherConfigRequest> appSettings;
+        private readonly IAPIGetService<WeatherModel> service;
+        private readonly IWeatherURI url;
+
+        public GetWeather(IAppSettings<WeatherConfigRequest> appSettings,
+                          IAPIGetService<WeatherModel> service, IWeatherURI uri)
         {
-            var config = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build();
-            var section = config.GetSection(nameof(WeatherConfigRequest));
-            var weatherClientConfig = section.Get<WeatherConfigRequest>();
+            Guard.ArgumentNotNull(appSettings, nameof(appSettings));
+            Guard.ArgumentNotNull(service, nameof(service));
+            Guard.ArgumentNotNull(uri, nameof(uri));
 
-            using (var client = new HttpClient())
-            {
-                var url = $"{weatherClientConfig.Url}key={weatherClientConfig.Key}&q={request.City}&{request.AirQuality}";
-                var response = await client.GetAsync(url);            
+            this.appSettings = appSettings;
+            this.service = service;
+            this.url = uri;
+        }
 
-                if (response.IsSuccessStatusCode)
-                {
-                    return await response.Content.ReadFromJsonAsync<WeatherModel>();                     
-                }
-            }
+        public async Task<WeatherModel?> Handler(WeatherRequest request)
+        {
+            var settings = await appSettings.GetAppSettings();
 
-            return null;
+            string url = this.url.BuildUri(settings, request);
+
+            return await service.GetData(url);
         }
     }
 }
-                                                                                                            

@@ -2,7 +2,7 @@
 {
     public class WeatherConfigRequest
     {
-        public string Url { get; set; }
+        public string BaseUrl { get; set; }
         public string Key { get; set; }
     }
 }

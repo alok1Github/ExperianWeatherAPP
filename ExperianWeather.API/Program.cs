@@ -1,10 +1,14 @@
-using Experian.API;
 using Experian.API.Features.Weather;
+using Experian.API.Interface;
+using Experian.API.Interface.Weather;
+using Experian.API.Request;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddScoped<IGetWeather, GetWeather>();
+builder.Services.AddScoped<IAppSettings<WeatherConfigRequest>, AppSettings>();
+
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

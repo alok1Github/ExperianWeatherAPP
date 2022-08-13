@@ -1,7 +1,7 @@
 ﻿using Experian.API.Model;
 using Experian.API.Request;
 
-namespace Experian.API
+namespace Experian.API.Interface.Weather
 {
     public interface IGetWeather
     {

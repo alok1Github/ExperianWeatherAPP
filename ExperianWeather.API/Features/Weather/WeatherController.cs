@@ -1,7 +1,7 @@
-﻿using Experian.API.Model;
+﻿using Experian.API.Interface.Weather;
+using Experian.API.Request;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Practices.EnterpriseLibrary.Common.Utility;
-using Experian.API.Request;
 
 namespace Experian.API.Features.Weather
 {
@@ -19,13 +19,13 @@ namespace Experian.API.Features.Weather
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetWeatherForecast([FromQuery] WeatherRequest request )
+        public async Task<IActionResult> GetWeatherForecast([FromQuery] WeatherRequest request)
         {
-            if (request == null) BadRequest();          
+            if (request == null) BadRequest();
 
             var result = await this.getWeather.Handler(request);
 
-            return result != null ? Ok(result) : NotFound();            
+            return result != null ? Ok(result) : NotFound();
         }
     }
 }
