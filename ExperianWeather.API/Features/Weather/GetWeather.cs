@@ -5,21 +5,25 @@ namespace Experian.API.Features.Weather
 {
     public class GetWeather : IGetWeather
     {
-        public async Task<WeatherModel> Handler(WeatherRequest request)
+        public async Task<WeatherModel?> Handler(WeatherRequest request)  
         {
-            var weather = new WeatherModel();
+            var config = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build();
+            var section = config.GetSection(nameof(WeatherConfigRequest));
+            var weatherClientConfig = section.Get<WeatherConfigRequest>();
+
             using (var client = new HttpClient())
             {
-                var response = await client.GetAsync("http://api.weatherapi.com/v1/current.json?key=e0796082219144bca7590818220908&q=Edinburgh&aqi=yes");
+                var url = $"{weatherClientConfig.Url}key={weatherClientConfig.Key}&q={request.City}&{request.AirQuality}";
+                var response = await client.GetAsync(url);            
 
-                // HttpResponseMessage response = await client.GetAsync("http://api.weatherapi.com/v1/current.json?key=e0796082219144bca7590818220908&q=Edinburgh&aqi=yes");
                 if (response.IsSuccessStatusCode)
                 {
-                    weather = await response.Content.ReadFromJsonAsync<WeatherModel>();
+                    return await response.Content.ReadFromJsonAsync<WeatherModel>();                     
                 }
             }
 
-            return weather;
+            return null;
         }
     }
 }
+                                                                                                            

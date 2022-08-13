@@ -5,6 +5,6 @@ namespace Experian.API
 {
     public interface IGetWeather
     {
-        Task<WeatherModel> Handler(WeatherRequest request);
+        Task<WeatherModel?> Handler(WeatherRequest request);
     }
 }
