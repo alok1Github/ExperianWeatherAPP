@@ -25,14 +25,8 @@ namespace Experian.API.ExceptionHandlers
 
         private static Task HandleException(HttpContext context, Exception exception)
         {
-            // To Do : Error handling can be enhanced with different and more specific exceptions
-            //         also can be divided into various category in exception type
-            var exceptionType = exception.GetType();
-
-            if (exceptionType == typeof(UnauthorizedAccessException))
-            {
-                context.Response.StatusCode = (int)HttpStatusCode.Unauthorized;
-            }
+            // To Do : Error handling can be enhanced further with different and more specific exceptions
+            //         also can be divided into various category in exception type         
 
             var exceptionHandlerPathFeature = context.Features.Get<IExceptionHandlerPathFeature>();
             context.Response.ContentType = "application/json";
