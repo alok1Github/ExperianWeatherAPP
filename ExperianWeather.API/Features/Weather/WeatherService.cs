@@ -9,6 +9,9 @@ namespace Experian.API.Features.Weather
         {
             using (var client = new HttpClient())
             {
+                client.BaseAddress = new Uri(url);
+                client.DefaultRequestHeaders.Accept.Clear();
+
                 var response = await client.GetAsync(url);
 
                 if (response.IsSuccessStatusCode)
