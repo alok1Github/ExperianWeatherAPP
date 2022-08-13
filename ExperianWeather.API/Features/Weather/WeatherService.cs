@@ -9,7 +9,7 @@ namespace Experian.API.Features.Weather
         {
             using (var client = new HttpClient())
             {
-                var response = await client.GetAsync(url);
+                var response = await client.GetAsync("tdtdtd");
 
                 if (response.IsSuccessStatusCode)
                 {

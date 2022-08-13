@@ -1,13 +1,21 @@
+using Experian.API.ExceptionHandlers;
 using Experian.API.Features.Weather;
 using Experian.API.Interface;
 using Experian.API.Interface.Weather;
+using Experian.API.Model;
 using Experian.API.Request;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddScoped<IGetWeather, GetWeather>();
+
+// generic injection 
 builder.Services.AddScoped<IAppSettings<WeatherConfigRequest>, AppSettings>();
+builder.Services.AddScoped<IAPIGetService<WeatherModel>, WeatherService>();
+
+// Weather Injection
+builder.Services.AddScoped<IGetWeather, GetWeather>();
+builder.Services.AddScoped<IWeatherURI, WeatherURIBuilder>();
 
 
 builder.Services.AddControllers();
@@ -25,6 +33,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseMiddleware(typeof(GlobalErrorHandler));
 
 app.UseAuthorization();
 
