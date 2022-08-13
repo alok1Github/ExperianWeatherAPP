@@ -1,5 +1,6 @@
 using Experian.API.ExceptionHandlers;
 using Experian.API.Features.Weather;
+using Experian.API.Filters;
 using Experian.API.Interface;
 using Experian.API.Interface.Weather;
 using Experian.API.Model;
@@ -20,15 +21,16 @@ builder.Services.AddScoped<IWeatherURI, WeatherURIBuilder>();
 
 
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+// HttpLogging
 builder.Services.AddHttpLogging(logging =>
 {
     logging.LoggingFields = HttpLoggingFields.All;
 });
 
+// Enable Cors
 builder.Services.AddCors(options =>
 {
     options.AddPolicy(name: "AllowOrigin",
@@ -39,6 +41,14 @@ builder.Services.AddCors(options =>
                                 .AllowAnyMethod();
         });
 });
+
+// Filters
+builder.Services.AddControllersWithViews(options =>
+{
+    options.Filters.Add<TempratureFilter>();
+    options.Filters.Add<ValidationFilter>();
+});
+
 
 var app = builder.Build();
 
@@ -53,8 +63,10 @@ app.UseHttpLogging();
 
 app.UseCors("AllowOrigin");
 
+
 app.UseHttpsRedirection();
 
+// Excetion handler 
 app.UseMiddleware(typeof(GlobalErrorHandler));
 
 app.UseAuthorization();

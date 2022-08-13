@@ -11,10 +11,12 @@ namespace Experian.API.Model
         public string LastUpdated { get; set; }  // To Do : DateTimeOffset -use custom pareser
 
         [JsonPropertyName("temp_c")]
-        public decimal TempratureIncelsius { get; set; }
+        public decimal TempratureInCelsius { get; set; }
 
         [JsonPropertyName("temp_f")]
         public decimal TempFahrenheit { get; set; }
+
+        public decimal Temprature { get; set; }
 
         [JsonPropertyName("condition")]
         public ConditionModel ConditionDetails { get; set; }

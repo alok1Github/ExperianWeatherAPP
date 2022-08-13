@@ -1,9 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 
-namespace Experian.API.ExceptionHandlers
+namespace Experian.API.Filters
 {
-    public class ValidationHandler : ActionFilterAttribute
+    public class ValidationFilter : ActionFilterAttribute
     {
         public override void OnActionExecuting(ActionExecutingContext actionContext)
         {
