@@ -2,7 +2,6 @@ using Experian.API.ExceptionHandlers;
 using Experian.API.Features.Weather;
 using Experian.API.Filters;
 using Experian.API.Interface;
-using Experian.API.Interface.Weather;
 using Experian.API.Model;
 using Experian.API.Request;
 using Microsoft.AspNetCore.HttpLogging;
@@ -16,8 +15,8 @@ builder.Services.AddScoped<IAppSettings<WeatherConfigRequest>, AppSettings>();
 builder.Services.AddScoped<IAPIGetService<WeatherModel>, WeatherService>();
 
 // Weather Injection
-builder.Services.AddScoped<IGetWeather, GetWeather>();
-builder.Services.AddScoped<IWeatherURI, WeatherURIBuilder>();
+builder.Services.AddScoped<IGet<WeatherRequest, WeatherModel>, GetWeather>();
+builder.Services.AddScoped<IURI<WeatherConfigRequest, WeatherRequest>, WeatherURIBuilder>();
 
 
 builder.Services.AddControllers();
@@ -36,9 +35,10 @@ builder.Services.AddCors(options =>
     options.AddPolicy(name: "AllowOrigin",
         builder =>
         {
-            builder.WithOrigins("http://api.weatherapi.com")
-                                .AllowAnyHeader()
-                                .AllowAnyMethod();
+            builder.WithOrigins("http://localhost:4200")
+                                              .AllowAnyHeader()
+                                              .AllowAnyMethod();
+
         });
 });
 

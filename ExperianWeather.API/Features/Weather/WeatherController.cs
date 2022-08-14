@@ -1,4 +1,5 @@
-﻿using Experian.API.Interface.Weather;
+﻿using Experian.API.Interface;
+using Experian.API.Model;
 using Experian.API.Request;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Practices.EnterpriseLibrary.Common.Utility;
@@ -9,21 +10,21 @@ namespace Experian.API.Features.Weather
     [ApiController]
     public class WeatherController : ControllerBase
     {
-        private readonly IGetWeather getWeather;
+        private readonly IGet<WeatherRequest, WeatherModel> get;
 
-        public WeatherController(IGetWeather getWeather)
+        public WeatherController(IGet<WeatherRequest, WeatherModel> get)
         {
-            Guard.ArgumentNotNull(getWeather, nameof(getWeather));
+            Guard.ArgumentNotNull(get, nameof(get));
 
-            this.getWeather = getWeather;
+            this.get = get;
         }
 
-        [HttpGet]
-        public async Task<IActionResult> GetWeatherForecast([FromQuery] WeatherRequest request)
+        [HttpGet(Name = "GetWeatherReport")]
+        public async Task<IActionResult> Get([FromQuery] WeatherRequest request)
         {
             if (request == null) BadRequest();
 
-            var result = await this.getWeather.Handler(request);
+            var result = await this.get.Handler(request);
 
             return result != null ? Ok(result) : NotFound();
         }

@@ -1,11 +1,11 @@
-﻿using Experian.API.Interface.Weather;
+﻿using Experian.API.Interface;
 using Experian.API.Request;
 using Flurl;
 
 namespace Experian.API.Features.Weather
 {
 
-    public class WeatherURIBuilder : IWeatherURI
+    public class WeatherURIBuilder : IURI<WeatherConfigRequest, WeatherRequest>
     {
         public string BuildUri(WeatherConfigRequest settings, WeatherRequest parms) =>
                 settings.BaseUrl

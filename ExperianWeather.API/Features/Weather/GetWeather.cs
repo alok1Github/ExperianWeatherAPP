@@ -1,5 +1,4 @@
 ﻿using Experian.API.Interface;
-using Experian.API.Interface.Weather;
 using Experian.API.Model;
 using Experian.API.Request;
 using Microsoft.Practices.EnterpriseLibrary.Common.Utility;
@@ -7,14 +6,15 @@ using Microsoft.Practices.EnterpriseLibrary.Common.Utility;
 
 namespace Experian.API.Features.Weather
 {
-    public class GetWeather : IGetWeather
+    public class GetWeather : IGet<WeatherRequest, WeatherModel>
     {
         private readonly IAppSettings<WeatherConfigRequest> appSettings;
         private readonly IAPIGetService<WeatherModel> service;
-        private readonly IWeatherURI url;
+        private readonly IURI<WeatherConfigRequest, WeatherRequest> url;
 
         public GetWeather(IAppSettings<WeatherConfigRequest> appSettings,
-                          IAPIGetService<WeatherModel> service, IWeatherURI uri)
+                          IAPIGetService<WeatherModel> service,
+                          IURI<WeatherConfigRequest, WeatherRequest> uri)
         {
             Guard.ArgumentNotNull(appSettings, nameof(appSettings));
             Guard.ArgumentNotNull(service, nameof(service));
