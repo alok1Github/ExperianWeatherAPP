@@ -4,25 +4,29 @@ using Experian.API.Request;
 
 namespace Experian.API.Features.Weather
 {
-    public class WeatherService : IAPIGetService<WeatherModel>
+    public class CityService : IAPIGetService<CityModel>
     {
-        public async Task<WeatherModel?> GetData(ServiceRequest request)
+        public async Task<CityModel?> GetData(ServiceRequest request)
         {
             using (var client = new HttpClient())
             {
                 client.BaseAddress = new Uri(request.Url);
                 client.DefaultRequestHeaders.Accept.Clear();
 
+                client.DefaultRequestHeaders.Add("X-CSCAPI-KEY", request.CustomHeader);
+
+
                 var response = await client.GetAsync(request.Url);
 
                 if (response.IsSuccessStatusCode)
                 {
-                    return await response.Content.ReadFromJsonAsync<WeatherModel>();
+                    var result = await response.Content.ReadFromJsonAsync<List<CityResult>>();
+
+                    return new CityModel { cities = result };
                 }
             }
 
             return null;
         }
-
     }
 }

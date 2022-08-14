@@ -31,7 +31,12 @@ namespace Experian.API.Features.Weather
 
             string url = this.url.BuildUri(settings, request);
 
-            return await service.GetData(url);
+            var result = await service.GetData(new ServiceRequest
+            {
+                Url = url
+            });
+
+            return result;
         }
     }
 }

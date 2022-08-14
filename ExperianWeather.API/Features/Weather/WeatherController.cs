@@ -1,4 +1,5 @@
-﻿using Experian.API.Interface;
+﻿using Experian.API.Filters;
+using Experian.API.Interface;
 using Experian.API.Model;
 using Experian.API.Request;
 using Microsoft.AspNetCore.Mvc;
@@ -8,6 +9,7 @@ namespace Experian.API.Features.Weather
 {
     [Route("api/[controller]")]
     [ApiController]
+    [TempratureFilter]
     public class WeatherController : ControllerBase
     {
         private readonly IGet<WeatherRequest, WeatherModel> get;

@@ -1,29 +1,33 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Experian.API.Interface;
+using Experian.API.Model;
+using Experian.API.Request;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Practices.EnterpriseLibrary.Common.Utility;
 
-namespace Experian.API.Features.Weather
+namespace Experian.API.Features.City
 {
     [Route("api/[controller]")]
     [ApiController]
     public class CityController : ControllerBase
     {
-        // private readonly IGetWeather getWeather;
+        private readonly IGet<CityRequest, CityModel> get;
 
-        //public CityController(IGetWeather getWeather)
-        //{
-        //    Guard.ArgumentNotNull(getWeather, nameof(getWeather));
+        public CityController(IGet<CityRequest, CityModel> get)
+        {
+            Guard.ArgumentNotNull(get, nameof(get));
 
-        //    this.getWeather = getWeather;
-        //}
+            this.get = get;
+        }
 
 
-        //[HttpPost(Name = "GetCityByCountryCode")]
-        //public async Task<IActionResult> Get(WeatherRequest request)
-        //{
-        //    if (request == null) BadRequest();
+        [HttpGet(Name = "GetCitiesByCountryCode")]
+        public async Task<IActionResult> Get([FromQuery] CityRequest request)
+        {
+            if (request == null) BadRequest();
 
-        //    var result = await this.getWeather.Handler(request);
+            var result = await this.get.Handler(request);
 
-        //    return result != null ? Ok(result) : NotFound();
-        //}
+            return result != null ? Ok(result) : NotFound();
+        }
     }
 }

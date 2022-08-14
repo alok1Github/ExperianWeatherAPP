@@ -2,7 +2,7 @@
 using Experian.API.Request;
 namespace Experian.API.Features.Weather
 {
-    public class AppSettings : IAppSettings<WeatherConfigRequest>
+    public class WeatherAppSettings : IAppSettings<WeatherConfigRequest>
     {
         public Task<WeatherConfigRequest> GetAppSettings() =>
             Task.Run(() => new ConfigurationBuilder()

@@ -1,4 +1,5 @@
 using Experian.API.ExceptionHandlers;
+using Experian.API.Features.City;
 using Experian.API.Features.Weather;
 using Experian.API.Filters;
 using Experian.API.Interface;
@@ -10,13 +11,17 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
-// generic injection 
-builder.Services.AddScoped<IAppSettings<WeatherConfigRequest>, AppSettings>();
-builder.Services.AddScoped<IAPIGetService<WeatherModel>, WeatherService>();
-
 // Weather Injection
+builder.Services.AddScoped<IAppSettings<WeatherConfigRequest>, WeatherAppSettings>();
+builder.Services.AddScoped<IAPIGetService<WeatherModel>, WeatherService>();
 builder.Services.AddScoped<IGet<WeatherRequest, WeatherModel>, GetWeather>();
 builder.Services.AddScoped<IURI<WeatherConfigRequest, WeatherRequest>, WeatherURIBuilder>();
+
+// City Injection
+builder.Services.AddScoped<IAppSettings<CityConfigRequest>, CityAppSettings>();
+builder.Services.AddScoped<IAPIGetService<CityModel>, CityService>();
+builder.Services.AddScoped<IGet<CityRequest, CityModel>, GetCitiesByCountryCode>();
+builder.Services.AddScoped<IURI<CityConfigRequest, CityRequest>, CityURIBuilder>();
 
 
 builder.Services.AddControllers();
@@ -44,10 +49,8 @@ builder.Services.AddCors(options =>
 
 // Filters
 builder.Services.AddControllersWithViews(options =>
-{
-    options.Filters.Add<TempratureFilter>();
-    options.Filters.Add<ValidationFilter>();
-});
+    options.Filters.Add<ValidationFilter>()
+);
 
 
 var app = builder.Build();

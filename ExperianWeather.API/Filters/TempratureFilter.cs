@@ -3,27 +3,23 @@ using Experian.API.Request;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 
-namespace Experian.API.ExceptionHandlers
+namespace Experian.API.Filters
 {
     public class TempratureFilter : ActionFilterAttribute
     {
+        private TempratureEnum temprature;
+
+        public override void OnActionExecuting(ActionExecutingContext actionContext)
+        {
+            temprature = (actionContext.ActionArguments.Single().Value as WeatherRequest).TempratureUnit;
+        }
         public override void OnActionExecuted(ActionExecutedContext context)
         {
-            var request = context.ModelState.Values.ToArray()[3].AttemptedValue;
             var result = ((WeatherModel?)((ObjectResult?)context.Result).Value);
 
-            Enum.TryParse(request, out TempratureEnum temprature);
-
-            if (temprature == TempratureEnum.Fahrenheit)
-            {
-                result.CurrentDetails.Temprature = result.CurrentDetails.TempFahrenheit;
-
-            }
-            else
-            {
-                result.CurrentDetails.Temprature = result.CurrentDetails.TempratureInCelsius;
-
-            }
+            result.CurrentDetails.Temprature = temprature == TempratureEnum.Fahrenheit
+                                            ? result.CurrentDetails.TempFahrenheit
+                                            : result.CurrentDetails.TempratureInCelsius;
         }
     }
 }
