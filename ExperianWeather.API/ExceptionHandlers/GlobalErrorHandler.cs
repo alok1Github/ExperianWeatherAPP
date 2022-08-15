@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Diagnostics;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using System.Net;
 
 namespace Experian.API.ExceptionHandlers
@@ -26,13 +25,12 @@ namespace Experian.API.ExceptionHandlers
         private static Task HandleException(HttpContext context, Exception exception)
         {
             // To Do : Error handling can be enhanced further with different and more specific exceptions
-            //         also can be divided into various category in exception type         
+            //         also can be divided into various category in exception type (based on http Status code)
 
-            var exceptionHandlerPathFeature = context.Features.Get<IExceptionHandlerPathFeature>();
             context.Response.ContentType = "application/json";
 
             context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
-            var result = JsonConvert.SerializeObject(ExceptionResponseBuilder.createRespone(exceptionHandlerPathFeature?.Error, context));
+            var result = JsonConvert.SerializeObject(ExceptionResponseBuilder.createRespone(exception, context));
 
             return context.Response.WriteAsync(result);
         }

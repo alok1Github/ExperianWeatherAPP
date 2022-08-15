@@ -1,7 +1,4 @@
-﻿using System.Text.Json.Serialization;
-
-
-namespace Experian.API.Model
+﻿namespace Experian.API.Model
 {
     public class CityModel : IModel
     {
@@ -10,10 +7,7 @@ namespace Experian.API.Model
 
     public class CityResult
     {
-        [JsonPropertyName("id")]
         public int Id { get; set; }
-
-        [JsonPropertyName("name")]
         public string Name { get; set; }
     }
 }

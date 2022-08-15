@@ -8,7 +8,7 @@ namespace Experian.API.Model
         public int LastUpdatedEpoch { get; set; }
 
         [JsonPropertyName("last_updated")]
-        public string LastUpdated { get; set; }  // To Do : DateTimeOffset -use custom pareser
+        public string LastUpdated { get; set; }
 
         [JsonPropertyName("temp_c")]
         public decimal TempratureInCelsius { get; set; }
