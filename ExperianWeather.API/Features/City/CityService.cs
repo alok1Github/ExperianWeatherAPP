@@ -8,6 +8,10 @@ namespace Experian.API.Features.Weather
     {
         public async Task<CityModel?> GetData(ServiceRequest request)
         {
+            if (request == null
+                || string.IsNullOrEmpty(request?.Url)
+                || string.IsNullOrEmpty(request?.CustomHeader)) return null;
+
             using (var client = new HttpClient())
             {
                 client.BaseAddress = new Uri(request.Url);

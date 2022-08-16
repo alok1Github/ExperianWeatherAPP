@@ -23,7 +23,7 @@ namespace Experian.API.Features.City
         [HttpGet(Name = "GetCitiesByCountryCode")]
         public async Task<IActionResult> Get([FromQuery] CityRequest request)
         {
-            if (request == null) BadRequest();
+            if (request == null) return BadRequest();
 
             var result = await this.get.Handler(request);
 

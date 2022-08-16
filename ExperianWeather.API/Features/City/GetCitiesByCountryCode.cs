@@ -34,7 +34,7 @@ namespace Experian.API.Features.City
             var serviceRequest = new ServiceRequest
             {
                 Url = url,
-                CustomHeader = settings.Key
+                CustomHeader = settings?.Key
             };
 
             return await service.GetData(serviceRequest);
