@@ -1,13 +1,8 @@
 ﻿using Experian.API.Filters;
 using Experian.API.Model;
 using Experian.API.Request;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Abstractions;
 using Microsoft.AspNetCore.Mvc.Filters;
-using Microsoft.AspNetCore.Mvc.ModelBinding;
-using Microsoft.AspNetCore.Routing;
-using Moq;
 
 namespace Experian.API.Test.Filters
 {
@@ -15,7 +10,6 @@ namespace Experian.API.Test.Filters
     public class TempratureFilterTests
     {
         private TempratureFilter _filter;
-        private List<IFilterMetadata> _metaData;
         private ActionExecutingContext _executingContext;
         private ActionExecutedContext _executedContext;
 
@@ -23,17 +17,10 @@ namespace Experian.API.Test.Filters
         public void SetUp()
         {
             _filter = new TempratureFilter();
-            _metaData = new List<IFilterMetadata>();
+            Helper.ActionContext();
 
-            ActionContext();
-
-            _executingContext = new ActionExecutingContext(ActionContext(), _metaData,
-                                                 new Dictionary<string, object>(),
-                                                 new Mock<Controller>().Object);
-
-            _executedContext = new ActionExecutedContext(ActionContext(),
-                                                    new List<IFilterMetadata>(),
-                                                    new Mock<Controller>().Object);
+            _executingContext = Helper.ActionExecutingContext();
+            _executedContext = Helper.ActionExecutedContext();
         }
 
         [TestMethod]
@@ -102,11 +89,5 @@ namespace Experian.API.Test.Filters
             _executingContext.ActionArguments.Add("request", request);
         }
 
-        private static ActionContext ActionContext() =>
-             new ActionContext(
-                     httpContext: new DefaultHttpContext(),
-                     routeData: new RouteData(),
-                     actionDescriptor: new ActionDescriptor(),
-                     modelState: new ModelStateDictionary());
     }
 }
