@@ -18,7 +18,6 @@ namespace Experian.API.Test.Features.Weather
         public void SetUp()
         {
             _mockGet = new Mock<IGet<CityRequest, CityModel>>();
-
             _controller = new CityController(_mockGet.Object);
         }
 
@@ -53,11 +52,8 @@ namespace Experian.API.Test.Features.Weather
 
             var result = await _controller.Get(new CityRequest());
 
-
             Assert.IsNotNull(result);
             Assert.AreEqual(typeof(OkObjectResult), result.GetType());
         }
-
-
     }
 }

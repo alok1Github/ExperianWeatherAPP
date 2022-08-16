@@ -7,7 +7,6 @@ using Moq;
 
 namespace Experian.API.Test.Features.Weather
 {
-
     [TestClass]
     public class WeatherControllerTests
     {

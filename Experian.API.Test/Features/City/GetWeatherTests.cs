@@ -90,7 +90,6 @@ namespace Experian.API.Test.Features.Weather
             var result = await _GetCitiesByCountryCode.Handler(new CityRequest());
 
             Assert.IsNotNull(result);
-
             Assert.AreEqual(typeof(CityModel), result.GetType());
         }
 

@@ -46,6 +46,5 @@ namespace Experian.API.Test.Features.Weather
             Assert.IsNotNull(result);
             Assert.AreEqual(result, expectedUri);
         }
-
     }
 }

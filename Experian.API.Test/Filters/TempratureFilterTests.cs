@@ -36,8 +36,6 @@ namespace Experian.API.Test.Filters
                                                     new Mock<Controller>().Object);
         }
 
-
-
         [TestMethod]
         public void Temprature_Set_to_Fahrenheit_For_FahrenheitRequest()
         {
