@@ -24,7 +24,7 @@ namespace Experian.API.Features.Weather
         [HttpGet(Name = "GetWeatherReport")]
         public async Task<IActionResult> Get([FromQuery] WeatherRequest request)
         {
-            if (request == null) BadRequest();
+            if (request == null) return BadRequest();
 
             var result = await this.get.Handler(request);
 
