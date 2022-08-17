@@ -8,14 +8,14 @@ namespace Experian.API.Features.Weather
     {
         public async Task<WeatherModel?> GetData(ServiceRequest request)
         {
-            if (request == null || string.IsNullOrEmpty(request?.Url)) return null;
+            if (request == null || string.IsNullOrEmpty(request?.Uri)) return null;
 
             using (var client = new HttpClient())
             {
-                client.BaseAddress = new Uri(request.Url);
+                client.BaseAddress = new Uri(request.Uri);
                 client.DefaultRequestHeaders.Accept.Clear();
 
-                var response = await client.GetAsync(request.Url);
+                var response = await client.GetAsync(request.Uri);
 
                 if (response.IsSuccessStatusCode)
                 {

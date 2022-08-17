@@ -17,7 +17,6 @@ namespace Experian.API.Test.Features.Weather
         public void SetUp()
         {
             _mockGet = new Mock<IGet<WeatherRequest, WeatherModel>>();
-
             _controller = new WeatherController(_mockGet.Object);
         }
 
@@ -52,11 +51,8 @@ namespace Experian.API.Test.Features.Weather
 
             var result = await _controller.Get(new WeatherRequest());
 
-
             Assert.IsNotNull(result);
             Assert.AreEqual(typeof(OkObjectResult), result.GetType());
         }
-
-
     }
 }

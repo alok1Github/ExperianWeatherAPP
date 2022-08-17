@@ -17,7 +17,6 @@ namespace Experian.API.Features.Weather
         public WeatherController(IGet<WeatherRequest, WeatherModel> get)
         {
             Guard.ArgumentNotNull(get, nameof(get));
-
             this.get = get;
         }
 

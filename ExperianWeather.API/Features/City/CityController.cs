@@ -15,10 +15,8 @@ namespace Experian.API.Features.City
         public CityController(IGet<CityRequest, CityModel> get)
         {
             Guard.ArgumentNotNull(get, nameof(get));
-
             this.get = get;
         }
-
 
         [HttpGet(Name = "GetCitiesByCountryCode")]
         public async Task<IActionResult> Get([FromQuery] CityRequest request)

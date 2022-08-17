@@ -3,7 +3,6 @@ using Experian.API.Model;
 using Experian.API.Request;
 using Microsoft.Practices.EnterpriseLibrary.Common.Utility;
 
-
 namespace Experian.API.Features.City
 {
     public class GetCitiesByCountryCode : IGet<CityRequest, CityModel>
@@ -29,11 +28,11 @@ namespace Experian.API.Features.City
         {
             var settings = await appSettings.GetAppSettings();
 
-            string url = this.url.BuildUri(settings, request);
+            string uri = this.url.BuildUri(settings, request);
 
             var serviceRequest = new ServiceRequest
             {
-                Url = url,
+                Uri = uri,
                 CustomHeader = settings?.Key
             };
 

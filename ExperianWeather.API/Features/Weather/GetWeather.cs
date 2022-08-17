@@ -3,14 +3,13 @@ using Experian.API.Model;
 using Experian.API.Request;
 using Microsoft.Practices.EnterpriseLibrary.Common.Utility;
 
-
 namespace Experian.API.Features.Weather
 {
     public class GetWeather : IGet<WeatherRequest, WeatherModel>
     {
         private readonly IAppSettings<WeatherConfigRequest> appSettings;
         private readonly IAPIGetService<WeatherModel> service;
-        private readonly IURI<WeatherConfigRequest, WeatherRequest> url;
+        private readonly IURI<WeatherConfigRequest, WeatherRequest> uri;
 
         public GetWeather(IAppSettings<WeatherConfigRequest> appSettings,
                           IAPIGetService<WeatherModel> service,
@@ -22,18 +21,18 @@ namespace Experian.API.Features.Weather
 
             this.appSettings = appSettings;
             this.service = service;
-            this.url = uri;
+            this.uri = uri;
         }
 
         public async Task<WeatherModel?> Handler(WeatherRequest request)
         {
             var settings = await appSettings.GetAppSettings();
 
-            string url = this.url.BuildUri(settings, request);
+            string uri = this.uri.BuildUri(settings, request);
 
             var result = await service.GetData(new ServiceRequest
             {
-                Url = url
+                Uri = uri
             });
 
             return result;

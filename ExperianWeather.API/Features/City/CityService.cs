@@ -9,18 +9,17 @@ namespace Experian.API.Features.Weather
         public async Task<CityModel?> GetData(ServiceRequest request)
         {
             if (request == null
-                || string.IsNullOrEmpty(request?.Url)
+                || string.IsNullOrEmpty(request?.Uri)
                 || string.IsNullOrEmpty(request?.CustomHeader)) return null;
 
             using (var client = new HttpClient())
             {
-                client.BaseAddress = new Uri(request.Url);
+                client.BaseAddress = new Uri(request.Uri);
                 client.DefaultRequestHeaders.Accept.Clear();
 
                 client.DefaultRequestHeaders.Add("X-CSCAPI-KEY", request.CustomHeader);
 
-
-                var response = await client.GetAsync(request.Url);
+                var response = await client.GetAsync(request.Uri);
 
                 if (response.IsSuccessStatusCode)
                 {

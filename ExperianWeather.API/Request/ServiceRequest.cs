@@ -2,7 +2,7 @@
 {
     public class ServiceRequest
     {
-        public string Url { get; set; }
+        public string Uri { get; set; }
         public string CustomHeader { get; set; }
     }
 

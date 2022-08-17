@@ -26,7 +26,7 @@ namespace Experian.API.Test.ExceptionHandlers
 
         /* To Do : 
           * Should Add more test here and for GlobalErrorHandler
-          *  More Test for fetaure and in service class (for WeatherService and CityrService)       
+          *  More Test for fetaure and in service class (for WeatherService and CityService)       
           */
     }
 }

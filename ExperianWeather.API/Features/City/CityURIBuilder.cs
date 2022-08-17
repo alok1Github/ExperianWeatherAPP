@@ -4,7 +4,6 @@ using Flurl;
 
 namespace Experian.API.Features.City
 {
-
     public class CityURIBuilder : IURI<CityConfigRequest, CityRequest>
     {
         public string BuildUri(CityConfigRequest settings, CityRequest parms)

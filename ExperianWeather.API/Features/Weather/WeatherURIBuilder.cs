@@ -4,7 +4,6 @@ using Flurl;
 
 namespace Experian.API.Features.Weather
 {
-
     public class WeatherURIBuilder : IURI<WeatherConfigRequest, WeatherRequest>
     {
         public string BuildUri(WeatherConfigRequest settings, WeatherRequest parms)
@@ -16,6 +15,5 @@ namespace Experian.API.Features.Weather
                         .SetQueryParam("q", parms.City)
                         .SetQueryParam("aqi", parms.AirQuality);
         }
-
     }
 }

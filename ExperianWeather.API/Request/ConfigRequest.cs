@@ -5,11 +5,7 @@
         public string BaseUrl { get; set; }
         public string Key { get; set; }
     }
-    public class WeatherConfigRequest : ConfigRequest
-    {
-    }
+    public class WeatherConfigRequest : ConfigRequest { }
+    public class CityConfigRequest : ConfigRequest { }
 
-    public class CityConfigRequest : ConfigRequest
-    {
-    }
 }

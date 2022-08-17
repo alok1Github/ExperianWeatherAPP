@@ -3,7 +3,5 @@
     public class WeatherSummary
     {
         public decimal Temprature { get; set; }
-
-
     }
 }

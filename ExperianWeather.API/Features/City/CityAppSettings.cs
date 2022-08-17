@@ -1,5 +1,6 @@
 ﻿using Experian.API.Interface;
 using Experian.API.Request;
+
 namespace Experian.API.Features.City
 {
     public class CityAppSettings : IAppSettings<CityConfigRequest>

@@ -9,7 +9,6 @@ using Microsoft.AspNetCore.HttpLogging;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
 
 // Weather Injection
 builder.Services.AddScoped<IAppSettings<WeatherConfigRequest>, WeatherAppSettings>();
@@ -43,7 +42,6 @@ builder.Services.AddCors(options =>
             builder.WithOrigins("http://localhost:4200")
                                               .AllowAnyHeader()
                                               .AllowAnyMethod();
-
         });
 });
 
@@ -66,11 +64,12 @@ app.UseHttpLogging();
 
 app.UseCors("AllowOrigin");
 
-
 app.UseHttpsRedirection();
 
 // Excetion handler 
 app.UseMiddleware(typeof(GlobalErrorHandler));
+
+// To Do : apply the security for api
 
 app.UseAuthorization();
 
